@@ -1,0 +1,49 @@
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ddfb8a; 
+    color: #6dff56; 
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border-color: #0000003d;
+    border-style: solid;
+  }
+  
+  .navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .navbar .logo {
+    height: 50px;
+  }
+  
+  .navbar nav ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navbar nav ul li {
+    margin-right: 15px;
+  }
+  
+  .navbar nav ul li a {
+    color: #050505;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.2s; /* Add a smooth transition for hover effect */
+  }
+  
+  .navbar nav ul li a:hover {
+    color: #fd6565; /* Change text color on hover */
+  }
+  

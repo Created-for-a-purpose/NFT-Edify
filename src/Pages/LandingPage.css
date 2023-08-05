@@ -1,0 +1,30 @@
+
+.hero {
+    background-color: rgb(205, 229, 251);
+    color: #080808;
+    text-align: center;
+    padding: 86px 0;
+  }
+  
+  .hero h1 {
+    font-size: 36px;
+  }
+  
+  .hero p {
+    font-size: 20px;
+    font-family: cursive;
+  }
+
+  .logos{
+    justify-content: space-between;
+  }
+
+  .logo-image{
+    height: 50px;
+    width: 50px;
+    margin-right: 12px;
+  }
+  
+  
+  
+  

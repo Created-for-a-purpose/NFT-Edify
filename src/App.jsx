@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import LandingPage from './Pages/LandingPage';
+import { Route, Routes } from 'react-router-dom';
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultWallets,
+  RainbowKitProvider
+} from '@rainbow-me/rainbowkit';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import {
+  hardhat
+} from 'wagmi/chains';
+const { chains, publicClient } = configureChains(
+  [hardhat],
+  [
+    publicProvider()
+  ]
+);
+const { connectors } = getDefaultWallets({
+  appName: 'CB',
+  projectId: 'cbabb06b3a049fce0e9231318d94998e',
+  chains
+});
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient
+})
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WagmiConfig config={wagmiConfig}>
+    <RainbowKitProvider chains={chains}>
+    <Routes>
+     <Route exact path = "/" element={<LandingPage path="/" />}/>
+    </Routes>
+    </RainbowKitProvider>
+    </WagmiConfig>
   );
 }
 
