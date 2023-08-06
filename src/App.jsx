@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import LandingPage from './Pages/LandingPage';
+import Dashboard from './Pages/Dashboard';
 import { Route, Routes } from 'react-router-dom';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
@@ -35,6 +36,7 @@ function App() {
     <RainbowKitProvider chains={chains}>
     <Routes>
      <Route exact path = "/" element={<LandingPage path="/" />}/>
+     <Route exact path = "/dashboard" element={<Dashboard path="/dashboard" />}/>
     </Routes>
     </RainbowKitProvider>
     </WagmiConfig>

@@ -1,6 +1,7 @@
 
 .hero {
     background-color: rgb(205, 229, 251);
+    background: linear-gradient(90deg, rgba(205, 229, 251, 1) 0%, rgba(255, 255, 255, 1) 100%);
     color: #080808;
     text-align: center;
     padding: 86px 0;

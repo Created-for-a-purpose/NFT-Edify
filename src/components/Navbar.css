@@ -31,11 +31,10 @@
     display: flex;
   }
   
+  
+  
   .navbar nav ul li {
     margin-right: 15px;
-  }
-  
-  .navbar nav ul li a {
     color: #050505;
     text-decoration: none;
     font-size: 16px;
@@ -43,7 +42,8 @@
     transition: color 0.2s; /* Add a smooth transition for hover effect */
   }
   
-  .navbar nav ul li a:hover {
+  .navbar nav ul li:hover {
     color: #fd6565; /* Change text color on hover */
+    cursor: pointer;
   }
   

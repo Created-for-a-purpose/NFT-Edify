@@ -1,8 +1,10 @@
 import React from 'react';
 import './Navbar.css'; 
+import { useNavigate } from 'react-router-dom';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <header className="navbar">
       <div className="container">
@@ -11,9 +13,9 @@ const Navbar = () => {
         </div>
         <nav>
           <ul>
-            <li><a href="">Dashboard</a></li>
-            <li><a href="">Educational Content</a></li>
-            <li><a href="">Community</a></li>
+            <li onClick={()=>navigate("/dashboard")}>Dashboard</li>
+            <li onClick={()=>navigate("/dashboard")}>Educational Content</li>
+            <li onClick={()=>navigate("/dashboard")}>Community</li>
           </ul>
         </nav>
         <div><ConnectButton/></div>
