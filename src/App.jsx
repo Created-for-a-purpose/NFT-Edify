@@ -3,6 +3,7 @@ import React from 'react';
 import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import Content from './Pages/Content';
+import ContentDetail from './Pages/ContentDetail';
 import { Route, Routes } from 'react-router-dom';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
@@ -12,10 +13,10 @@ import {
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import {
-  hardhat
+  hardhat, optimism, optimismGoerli, baseGoerli, zoraTestnet
 } from 'wagmi/chains';
 const { chains, publicClient } = configureChains(
-  [hardhat],
+  [optimism, optimismGoerli, baseGoerli, zoraTestnet, hardhat],
   [
     publicProvider()
   ]
@@ -39,6 +40,7 @@ function App() {
      <Route exact path = "/" element={<LandingPage path="/" />}/>
      <Route exact path = "/dashboard" element={<Dashboard path="/dashboard" />}/>
      <Route exact path = "/content" element={<Content path="/content" />}/>
+     <Route exact path = "/content/:id" element={<ContentDetail path="/content:id" />}/>
     </Routes>
     </RainbowKitProvider>
     </WagmiConfig>

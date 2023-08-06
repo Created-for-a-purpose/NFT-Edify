@@ -27,6 +27,10 @@
     font-size: 20px;
 }
 
+.content-card-details span:hover{
+   cursor: pointer;
+}
+
 .content-card-details button{
     border-radius: 4px;
     background-color: rgb(234, 137, 137);
@@ -44,5 +48,5 @@
 }
 
 .content-card-details button:active{
-    transform: translate(0px, 5px);
+    transform: translate(1px, 5px);
 }

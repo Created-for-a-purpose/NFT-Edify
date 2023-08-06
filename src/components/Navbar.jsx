@@ -18,7 +18,7 @@ const Navbar = () => {
             <li onClick={()=>navigate("/dashboard")}>Community</li>
           </ul>
         </nav>
-        <div><ConnectButton/></div>
+        <div><ConnectButton chainStatus="icon" showBalance={false}/></div>
       </div>
     </header>
   );
