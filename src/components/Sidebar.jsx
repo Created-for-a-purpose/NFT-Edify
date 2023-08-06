@@ -1,15 +1,15 @@
 import React from 'react';
 import './Sidebar.css'; 
 
-const Sidebar = () => {
+const Sidebar = ({handleContent}) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-content">
-        <h2>Hello 👋</h2>
+        <h2>Hello! 👋</h2>
         <ul>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#gift-cards">Gift someone 🎉</a></li>
-          <li><a href="#gift-cards">Your gifts 🎁</a></li>
+          <li onClick={()=>handleContent('skills')}>Skills 🥇</li>
+          <li onClick={()=>handleContent('gift')}>Gift someone 🎉</li>
+          <li onClick={()=>handleContent('gifts')}>Your gifts 🎁</li>
         </ul>
       </div>
     </aside>

@@ -27,9 +27,6 @@
   .sidebar ul li {
     margin-bottom: 10px;
     font-size: 18px;
-  }
-  
-  .sidebar ul li a {
     text-decoration: none;
     color: #333; /* Use your preferred text color for the links */
     display: block;
@@ -37,7 +34,8 @@
     border-radius: 5px;
   }
   
-  .sidebar ul li a:hover {
+  .sidebar ul li:hover {
     background-color: #ddd; /* Use your preferred background color on hover */
+    cursor: pointer;
   }
   
