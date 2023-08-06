@@ -1,0 +1,48 @@
+.content{
+    height: 35vh;
+    margin: 40px;
+}
+
+.content-card{
+    margin: 20px;
+    padding: 30px;
+    padding-top: 2px;
+    height: 90%;
+    background: linear-gradient(90deg, rgba(115,113,113,1) 0%, rgb(231, 229, 229) 100%);
+    border-radius: 10px;
+    display: flex;
+}
+
+.content-card img{
+    height: 200px;
+    width: 350px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.content-card-details{
+    text-align: center;
+    margin-left: 200px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.content-card-details button{
+    border-radius: 4px;
+    background-color: rgb(234, 137, 137);
+    background: linear-gradient(90deg, rgba(234,137,137,1) 0%, rgb(252, 193, 193) 100%);
+    font-size: large;
+    padding: 10px;
+    border-top-width: 3px;
+    border-left-width: 3px;
+    border-right-width: 6px;
+    border-bottom-width: 9px;
+}
+
+.content-card-details button:hover{
+    cursor: pointer;
+}
+
+.content-card-details button:active{
+    transform: translate(0px, 5px);
+}

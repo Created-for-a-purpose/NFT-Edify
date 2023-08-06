@@ -1,4 +1,5 @@
 .dashboard {
     display: flex;
+    height: 86.5vh;
     background: linear-gradient(90deg, rgba(205, 229, 251, 1) 0%, rgb(255, 255, 255) 100%);
 }

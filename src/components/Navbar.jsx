@@ -14,7 +14,7 @@ const Navbar = () => {
         <nav>
           <ul>
             <li onClick={()=>navigate("/dashboard")}>Dashboard</li>
-            <li onClick={()=>navigate("/dashboard")}>Educational Content</li>
+            <li onClick={()=>navigate("/content")}>Educational Content</li>
             <li onClick={()=>navigate("/dashboard")}>Community</li>
           </ul>
         </nav>
