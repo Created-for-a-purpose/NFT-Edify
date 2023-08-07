@@ -15,7 +15,8 @@ const Navbar = () => {
           <ul>
             <li onClick={()=>navigate("/dashboard")}>Dashboard</li>
             <li onClick={()=>navigate("/content")}>Educational Content</li>
-            <li onClick={()=>navigate("/dashboard")}>Community</li>
+            <li onClick={()=>navigate("/verify")}>Verification</li>
+            <li onClick={()=>navigate("/verify")}>Community</li>
           </ul>
         </nav>
         <div><ConnectButton chainStatus="icon" showBalance={false}/></div>

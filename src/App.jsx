@@ -4,6 +4,7 @@ import LandingPage from './Pages/LandingPage';
 import Dashboard from './Pages/Dashboard';
 import Content from './Pages/Content';
 import ContentDetail from './Pages/ContentDetail';
+import Verify from './Pages/Verify';
 import { Route, Routes } from 'react-router-dom';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
@@ -41,6 +42,7 @@ function App() {
      <Route exact path = "/dashboard" element={<Dashboard path="/dashboard" />}/>
      <Route exact path = "/content" element={<Content path="/content" />}/>
      <Route exact path = "/content/:id" element={<ContentDetail path="/content:id" />}/>
+     <Route exact path = "/verify" element={<Verify path="/verify" />}/>
     </Routes>
     </RainbowKitProvider>
     </WagmiConfig>

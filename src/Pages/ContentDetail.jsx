@@ -16,8 +16,8 @@ return(
     <Navbar/>
     <div className="content-detail">
         <video className="content-detail-video" width="320" height="240" controls>
-            <source src="https://www.youtube.com/watch?v=3xGLsO98Lj0" type="video/mp4"/>
-            No video
+            <source src={videolink} type="video/mp4"/>
+            Video
         </video>
         <div className="content-detail-info">
             <h1 className="content-detail-title">{title}</h1>
