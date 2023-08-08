@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar"
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { stringToHex } from "viem";
-import { EAS, Offchain, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk"
+import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk"
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 
@@ -15,10 +15,11 @@ const Content = () => {
     const account = useAccount();
 
     const get = async (e)=>{
-      const courseId = stringToHex(e.target.id, { size: 32});
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      eas.connect(provider)
-      const signer = new ethers.Wallet("cde2be96e27d483b8b1bf45b68d5b721d891371689c358f2d1497054c07609b4", provider);
+      try{
+        const courseId = stringToHex(e.target.id, { size: 32});
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        eas.connect(provider)
+        const signer = new ethers.Wallet("cde2be96e27d483b8b1bf45b68d5b721d891371689c358f2d1497054c07609b4", provider);
       const offchain = await eas.getOffchain();
       const schemaEncoder = new SchemaEncoder("bytes32 courseId, string courseName, uint64 purchaseDate");
       const encodedData = schemaEncoder.encodeData([
@@ -38,9 +39,9 @@ const Content = () => {
         refUID: '0x0000000000000000000000000000000000000000000000000000000000000000',
         data: encodedData,
       }, signer);
-
       console.log('att', offchainAttestation);
-      localStorage.setItem(account.address+'/'+courseId, offchainAttestation);
+      localStorage.setItem(account.address+'/'+courseId, JSON.stringify(offchainAttestation));
+    } catch(e){ console.log(e)}
     }
 
     return(

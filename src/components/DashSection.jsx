@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import './DashSection.css'; 
-import { useNetwork } from 'wagmi';
+import { useNetwork, useAccount } from 'wagmi';
 import { ZDK } from '@zoralabs/zdk';
 const API_ENDPOINT = "https://api.zora.co/graphql";
 const zdk = new ZDK({ endpoint: API_ENDPOINT });
 
 const DashSection = ({ selectedContent }) => {
   const {chain} = useNetwork();
+  const account = useAccount();
+
   const [toSearch, setToSearch] = useState('');
   const [nfts, setNfts] = useState([]);
+  const [atts, setAtts] = useState([]);
 
   const search = async () => {
      if(!chain && chain.name!== 'Ethereum') return;
@@ -70,6 +73,20 @@ const DashSection = ({ selectedContent }) => {
    else loadNfts();
   }, [chain]);
 
+  useEffect(() => {
+    async function loadAttestations(){
+        let atts = [];
+        let att = JSON.parse(localStorage.getItem(account.address+'/'+'1'));
+        if(att) atts.push(att);
+        att = JSON.parse(localStorage.getItem(account.address+'/'+'2'));
+        if(att) atts.push(att);
+        setAtts(atts)
+    }
+    if(selectedContent === 'attestations'){
+      loadAttestations();
+    }
+  }, [selectedContent]);
+
   return (
     <>
     {
@@ -108,6 +125,15 @@ const DashSection = ({ selectedContent }) => {
        selectedContent === 'attestations' &&
        <div className="right-section">
          <h2>Your EAS attestations 🎫</h2>
+        { atts && atts.map((att, index) => {
+         return <div className="right-section-attestationData" key={index}>
+          <h1 className='attestation-content-title'>Attestation 1</h1>
+          <p className='attestation-content-desc'>Hi</p>
+          <p className='attestation-content-desc'>Hi</p>
+          <p className='attestation-content-desc'>Hi</p>
+          <p className='attestation-content-desc'>Hi</p>
+         </div>})}
+         
        </div>
    }
    {

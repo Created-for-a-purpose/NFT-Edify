@@ -88,4 +88,25 @@
     margin-top:8px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
+
+  .right-section-attestationData{
+    height: 200px;
+    width: 80%;
+    background-color: #fff;
+    border-radius: 7px;
+    margin: 2.5rem;
+  }
+
+  .attestation-content-title{
+     font-size: large;
+     font-weight: bold;
+     padding-left: 1rem;
+     padding-top: 0.5rem;
+  }
+
+  .attestation-content-desc{
+    font-size: medium;
+    padding-left: 1rem;
+  }
+  
   
