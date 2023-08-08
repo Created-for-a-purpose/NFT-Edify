@@ -14,10 +14,10 @@ import {
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import {
-  hardhat, mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet
+  hardhat, mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet, sepolia
 } from 'wagmi/chains';
 const { chains, publicClient } = configureChains(
-  [mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet, hardhat],
+  [mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet, sepolia, hardhat],
   [
     publicProvider()
   ]
