@@ -12,4 +12,80 @@
     overflow-y: scroll;
     overflow-x: hidden;
   }
+
+  .right-section-top{
+    display: flex;
+  }
+
+  .right-section-content{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .right-section-search{
+    margin:15px;
+    margin-left: 50%;
+    width: 250px;
+    height: 25px;
+    border-radius: 7px;
+    padding: 4px;
+    padding-left: 6px;
+    font-family: cursive;
+  }
+
+  .search-on{
+    margin-top: 15px;
+    font-size: 25px;
+  }
+
+  .search-on:hover{
+    cursor: pointer;
+  }
+
+  .search-on:active{
+    transform: translate(2px, 2px);
+  }
+
+  .right-section-content-card{
+    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 300px;
+    width: 250px;
+    text-align: center;
+  }
+
+  .right-section-content-card:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+
+  .right-section-content-card-title{
+    font-family: cursive;
+    text-align: center;
+    font-size: larger;
+    padding: 7px;
+  }
+
+  .right-section-content-card-image{
+    width: 70%;
+    height: 150px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+  }
+
+  .right-section-content-card-desc{
+    margin: 6px;
+    margin-top:8px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
   
