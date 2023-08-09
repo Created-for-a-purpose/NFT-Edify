@@ -76,9 +76,9 @@ const DashSection = ({ selectedContent }) => {
   useEffect(() => {
     async function loadAttestations(){
         let atts = [];
-        let att = JSON.parse(localStorage.getItem(account.address+'/'+'1'));
+        let att = localStorage.getItem(account.address+'/'+'1');
         if(att) atts.push(att);
-        att = JSON.parse(localStorage.getItem(account.address+'/'+'2'));
+        att = localStorage.getItem(account.address+'/'+'2');
         if(att) atts.push(att);
         setAtts(atts)
     }
@@ -127,11 +127,10 @@ const DashSection = ({ selectedContent }) => {
          <h2>Your EAS attestations 🎫</h2>
         { atts && atts.map((att, index) => {
          return <div className="right-section-attestationData" key={index}>
-          <h1 className='attestation-content-title'>Attestation 1</h1>
-          <p className='attestation-content-desc'>Hi</p>
-          <p className='attestation-content-desc'>Hi</p>
-          <p className='attestation-content-desc'>Hi</p>
-          <p className='attestation-content-desc'>Hi</p>
+          <h1 className='attestation-content-title'>{index===0 ? ("Solidity course for beginners") : ("Make your First Dapp tutorial")}</h1>
+          <p className='attestation-content-desc'>UID : {att}</p>
+          <p className='attestation-content-desc'>EAS Scan ➚ : <a target="_blank" href={"https://sepolia.easscan.org/attestation/view/"+att}>Click</a></p>
+          <p className='attestation-content-desc'>Expires : {index==0?" Never": "In 1 hour"}</p>
          </div>})}
          
        </div>
