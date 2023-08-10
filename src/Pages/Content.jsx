@@ -1,6 +1,5 @@
 import "./Content.css"
 import Navbar from "../components/Navbar"
-import submitAttestation from "../utils/submitAttestation"
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { stringToHex } from "viem";
