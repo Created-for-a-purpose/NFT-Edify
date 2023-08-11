@@ -1,0 +1,13 @@
+{
+    "basegoerli":{
+        "type": "collateral",
+        "nftaddress": "0x00",
+        "mailbox": "",
+        "interchaingaspaymaster": ""
+    },
+    "optimismgoerli":{
+        "type": "synthetic",
+        "mailbox": "",
+        "interchaingaspaymaster": ""
+    }
+}

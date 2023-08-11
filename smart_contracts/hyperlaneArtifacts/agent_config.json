@@ -1,0 +1,32 @@
+{
+  "chains": {
+    "base": {
+      "name": "base",
+      "domain": 84531,
+      "addresses": {
+        "mailbox": "0xBABa7dD2Ac3f00C31154B2979F1FC67FC050bEb8",
+        "interchainGasPaymaster": "0x0486978C6608FBF91Af62815bBFC7f60F3016954",
+        "validatorAnnounce": "0x62160010d98f634Ae175C36F6f33FA664F040a58"
+      },
+      "protocol": "ethereum",
+      "finalityBlocks": 1,
+      "index": {
+        "from": 8251573
+      }
+    },
+    "optimismgoerli": {
+      "name": "optimismgoerli",
+      "domain": 420,
+      "addresses": {
+        "mailbox": "0xCC737a94FecaeC165AbCf12dED095BB13F037685",
+        "interchainGasPaymaster": "0x7cD40F7b76CE58DC28324270c35A54c9d9A1C4f2",
+        "validatorAnnounce": "0x3Fc742696D5dc9846e04f7A1823D92cb51695f9a"
+      },
+      "protocol": "ethereum",
+      "finalityBlocks": 1,
+      "index": {
+        "from": 3055263
+      }
+    }
+  }
+}
