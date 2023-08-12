@@ -381,3 +381,31 @@ export const skillNftAbi =  [
       "type": "function"
     }
   ]
+
+export const verifierAddress = "0x7aAAc7E908BAA4C3cb6025668422EA14a3C0e2F4"
+export const verifierABI = [
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[24]",
+        "name": "_proof",
+        "type": "uint256[24]"
+      },
+      {
+        "internalType": "uint256[2]",
+        "name": "_pubSignals",
+        "type": "uint256[2]"
+      }
+    ],
+    "name": "verifyProof",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

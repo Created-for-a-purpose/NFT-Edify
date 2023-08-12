@@ -1,6 +1,6 @@
-const express = require('express')
-const cors = require('cors')
-const axios = require('axios')
+const express = require("express")
+const cors = require("cors")
+const snarkjs = require("snarkjs")
 
 const app = express()
 const corsOptions ={
@@ -11,23 +11,35 @@ const corsOptions ={
 
 app.use(express.json())
 app.use(cors(corsOptions))
+app.use(express.static('./ZKP'))
 app.listen(8000, ()=>console.log('File server is running on port 8000'))
 
-app.post('/submit', async (req, res) => {
+app.post("/generateProof", async (req, res) => {
     try{
-       const data = req.body.data
-       const url = req.body.baseUrl
+        const signals = req.body
+        const wasmFile = "./ZKP/pos_js/pos.wasm"
+        const zkeyFile = "./ZKP/circuit_final.zkey"
+
+        const { proof, publicSignals } = await snarkjs.plonk.fullProve(signals, wasmFile, zkeyFile)
+        const callData = await snarkjs.plonk.exportSolidityCallData(proof, publicSignals)
         
-            const response = await axios.post(
-                    `${url}/offchain/store`,
-                    data,
-                    {headers:{"Content-Type" : "application/json"}}
-            ).then (res => {
-                console.log(res.data)
-            }).catch(err => { console.error(err.response.data) })
-            res.send(response)
+        res.send({ proof, publicSignals, callData })
     }
     catch(err){
-        console.error(err.response.data)
+        console.log(err)
+    }
+})
+
+app.post("/verifyProof", async (req, res) => {
+    try{
+        const vkey = req.body.vkey
+        const publicSignals = req.body.publicSignals
+        const proof = req.body._proof
+
+        const isValid = await snarkjs.plonk.verify(vkey, publicSignals, proof)
+        res.send(isValid)
+    }
+    catch(e){
+        res.status(500).send(e.message)
     }
 })

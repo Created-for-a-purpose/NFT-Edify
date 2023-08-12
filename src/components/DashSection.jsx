@@ -24,17 +24,59 @@ const DashSection = ({ selectedContent }) => {
   const [flip, setFlip] = useState(false);
   const [proof, setProof] = useState(null);
 
+  const process = (string) => {
+      // convert hex to bit string
+      let bitString = '';
+      for(let i=2; i<string.length; i++){
+        const bits = parseInt(string[i], 16).toString(2);
+        bitString += bits.padStart(4, '0');
+      }
+      // convert bit string to array of bits
+      let bits = [];
+      for(let i=0; i<bitString.length; i++){
+        bits.push(bitString[i]);
+      }
+      return bits;
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(JSON.stringify(proof));
+  }
+
   const generateProof = async (uid) => {
        try{
         const provider = new ethers.BrowserProvider(window.ethereum);
            eas.connect(provider);
            const attestation = await eas.getAttestation(uid);
             console.log(attestation);
-            const schema = attestation[1]
+            let schema = attestation[1]
+            schema = process(schema)
+            const expiration = Number(attestation[3].toString())
             const recipient = attestation[6]
-            const attestor = attestation[7]
+            let attestor = attestation[7]
+            attestor = process(attestor)
 
+         const signals= {
+          attestor, 
+          schema,
+          expiration,
+          expExpiration: 0
+         }
 
+         let reqConfig = {
+          url: "http://localhost:8000/generateProof",
+          method: 'POST',
+          data: signals
+         }
+
+         await axios.request(reqConfig).then((res) => {
+          setProof({proof: res.data.callData,
+          signals: res.data.publicSignals,
+          recipient: recipient
+         });
+         }
+          ).catch((err) => { console.log(err) } )
+          
        }
        catch(e){
          console.log(e);
@@ -190,7 +232,7 @@ const DashSection = ({ selectedContent }) => {
            <b><i>i</i></b>&nbsp; We value your privacy ! Prove your skill using ZK
           </div>
           <button className="card-flip-proof-button" onClick={()=>generateProof(nft.uid)}>Generate Proof</button>
-          {proof!==null && <div className="card-flip-copy">Copy Proof --{'>'}<span className='card-flip-copy-emoji'>📜</span></div>}
+          {proof!==null && <div className="card-flip-copy">Copy Proof --{'>'}<span className='card-flip-copy-emoji' onClick={copyToClipboard}>📜</span></div>}
           <div className="right-section-content-card-desc">
           <b><i>i</i></b>&nbsp; Warp your skill to another chain
           <button className="card-flip-bridge-button">Warp to Optimism</button>

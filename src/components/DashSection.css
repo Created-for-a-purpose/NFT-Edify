@@ -164,6 +164,7 @@
   }
   .card-flip-copy-emoji:active{
     transform: translate(1px, 5px);
+    cursor: wait;
   }
 
   .card-flip-button{
