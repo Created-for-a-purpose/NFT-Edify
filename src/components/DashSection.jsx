@@ -3,9 +3,16 @@ import './DashSection.css';
 import { useNetwork, useAccount } from 'wagmi';
 import { readContract } from 'wagmi/actions';
 import { skillNftAddress, skillNftAbi} from "../constants"
+import { EAS } from "@ethereum-attestation-service/eas-sdk";
+import axios from 'axios';
+import { ethers } from "ethers";
 import { ZDK } from '@zoralabs/zdk';
+
 const API_ENDPOINT = "https://api.zora.co/graphql";
 const zdk = new ZDK({ endpoint: API_ENDPOINT });
+
+const EASContractAddress = "0xAcfE09Fd03f7812F022FBf636700AdEA18Fd2A7A";
+const eas = new EAS(EASContractAddress);
 
 const DashSection = ({ selectedContent }) => {
   const {chain} = useNetwork();
@@ -16,6 +23,23 @@ const DashSection = ({ selectedContent }) => {
   const [atts, setAtts] = useState([]);
   const [flip, setFlip] = useState(false);
   const [proof, setProof] = useState(null);
+
+  const generateProof = async (uid) => {
+       try{
+        const provider = new ethers.BrowserProvider(window.ethereum);
+           eas.connect(provider);
+           const attestation = await eas.getAttestation(uid);
+            console.log(attestation);
+            const schema = attestation[1]
+            const recipient = attestation[6]
+            const attestor = attestation[7]
+
+
+       }
+       catch(e){
+         console.log(e);
+       }
+  }
 
   const search = async () => {
      if(!chain && chain.name!== 'Ethereum') return;
@@ -165,7 +189,7 @@ const DashSection = ({ selectedContent }) => {
           <div className="right-section-content-card-desc">
            <b><i>i</i></b>&nbsp; We value your privacy ! Prove your skill using ZK
           </div>
-          <button className="card-flip-proof-button">Generate Proof</button>
+          <button className="card-flip-proof-button" onClick={()=>generateProof(nft.uid)}>Generate Proof</button>
           {proof!==null && <div className="card-flip-copy">Copy Proof --{'>'}<span className='card-flip-copy-emoji'>📜</span></div>}
           <div className="right-section-content-card-desc">
           <b><i>i</i></b>&nbsp; Warp your skill to another chain

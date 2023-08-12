@@ -16,8 +16,8 @@ template pos(){
   expiration === expExpiration;     // Attestation should not be expired
 
   var _attestor = 0x6b29615CcDbA6e0e803F808D42e4477324F94D41;
-  var _schema1 = 0xeb368690076a0c299465f38b48847d7f;
-  var _schema2 = 0x40b3ecdf25bbd769acd984d98ea612c6;
+  var _schema1 = 0xc654a0417289e5acb2b16a06d8a9d8bc;
+  var _schema2 = 0x7da5aad2f7d13f74b59bffa11d0c80ee;
 
   for(var i=0;i<160;i++){
     var x = ((_attestor>>i) & 1);
