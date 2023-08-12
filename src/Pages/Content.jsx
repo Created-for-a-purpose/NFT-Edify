@@ -7,7 +7,7 @@ import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk"
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 
-const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e";
+const EASContractAddress = "0xAcfE09Fd03f7812F022FBf636700AdEA18Fd2A7A";
 const eas = new EAS(EASContractAddress);
 
 const Content = () => {
@@ -30,13 +30,14 @@ const Content = () => {
       ]);
       
       const schemaUID = "0xeb368690076a0c299465f38b48847d7f40b3ecdf25bbd769acd984d98ea612c6";
-      const expiration = (e.target.id==='1') ? 0: Date.now()+3600; 
+      const revocation = (e.target.id==='1') ? 0 : (Date.now()+60*60*1000); 
 
       const tx = await eas.attest({
         schema: schemaUID,
         data: {
           recipient: account.address,
-          expirationTime: expiration,
+          expirationTime: 0,
+          revocationTime: revocation,
           revocable: true,
           data: encodedData,
         },
@@ -44,7 +45,7 @@ const Content = () => {
       
       const newAttestationUID = await tx.wait();
 
-      console.log('att', newAttestationUID);
+      console.log('att',e.target.id, newAttestationUID);
       localStorage.setItem(account.address+'/'+e.target.id, newAttestationUID);
       
     } catch(e){ console.log(e)}

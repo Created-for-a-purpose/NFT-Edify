@@ -59,15 +59,11 @@
     background-color: #fff;
     border-radius: 6px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    height: 300px;
+    height: 370px;
     width: 250px;
     text-align: center;
   }
 
-  .right-section-content-card:hover{
-    cursor: pointer;
-    transform: scale(1.05);
-  }
 
   .right-section-content-card-title{
     font-family: cursive;
@@ -109,4 +105,74 @@
     padding-left: 1rem;
   }
   
-  
+  .card-flip-proof-button{
+    border-radius: 4px;
+    background-color: rgb(234, 137, 137);
+    background: linear-gradient(90deg, rgba(234,137,137,1) 0%, rgb(252, 193, 193) 100%);
+    font-size: large;
+    padding: 10px;
+    border-top-width: 3px;
+    border-left-width: 3px;
+    border-right-width: 6px;
+    border-bottom-width: 9px;
+    margin:15px;
+    margin-bottom: 10px;
+  }
+
+  .card-flip-bridge-button{
+    border-radius: 4px;
+    background-color: rgb(234, 137, 137);
+    background: linear-gradient(90deg, rgba(234,137,137,1) 0%, rgb(252, 193, 193) 100%);
+    font-size: large;
+    padding: 10px;
+    border-top-width: 3px;
+    border-left-width: 3px;
+    border-right-width: 6px;
+    border-bottom-width: 9px;
+    margin:15px;
+    margin-bottom: 0;
+  }
+
+  .card-flip-proof-button:hover{
+    cursor: pointer;
+  }
+
+  .card-flip-proof-button:active{
+    transform: translate(1px, 5px);
+  }
+
+  .card-flip-bridge-button:hover{
+    cursor: pointer;
+  }
+ 
+  .card-flip-bridge-button:active{
+    transform: translate(1px, 5px);
+  }
+
+  .card-flip-copy{
+    font-family: cursive;
+    font-size: 20px;
+    margin: 10px;
+    margin-bottom: 40px;
+  }
+
+  .card-flip-copy-emoji{
+    font-size: 30px;
+  }
+  .card-flip-copy-emoji:hover{
+    cursor: pointer;
+  }
+  .card-flip-copy-emoji:active{
+    transform: translate(1px, 5px);
+  }
+
+  .card-flip-button{
+     font-weight: bolder;
+      font-size: 20px;
+      text-align: right;
+      padding: 20px;
+  }
+
+  .card-flip-button:hover{
+    cursor: pointer;
+  }

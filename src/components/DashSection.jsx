@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './DashSection.css'; 
 import { useNetwork, useAccount } from 'wagmi';
+import { readContract } from 'wagmi/actions';
+import { skillNftAddress, skillNftAbi} from "../constants"
 import { ZDK } from '@zoralabs/zdk';
 const API_ENDPOINT = "https://api.zora.co/graphql";
 const zdk = new ZDK({ endpoint: API_ENDPOINT });
@@ -12,6 +14,8 @@ const DashSection = ({ selectedContent }) => {
   const [toSearch, setToSearch] = useState('');
   const [nfts, setNfts] = useState([]);
   const [atts, setAtts] = useState([]);
+  const [flip, setFlip] = useState(false);
+  const [proof, setProof] = useState(null);
 
   const search = async () => {
      if(!chain && chain.name!== 'Ethereum') return;
@@ -64,7 +68,43 @@ const DashSection = ({ selectedContent }) => {
    }
 
    async function loadNfts(){
-    return;
+     try{
+        const totalSupply = await readContract({
+      abi: skillNftAbi,
+      address: skillNftAddress,
+      functionName: 'totalSupply',
+        })
+
+        let tokens = []
+        for(let i=1; i<=totalSupply; i++){
+          const owner = await readContract({
+      abi: skillNftAbi,
+      address: skillNftAddress,
+      functionName: 'ownerOf',
+      args: [i]
+        })
+        if(owner === account.address)
+        tokens.push(i)
+        }
+
+        let nfts = [];
+        for(let i=0; i<tokens.length; i++){
+          const eas_uid = await readContract({
+      abi: skillNftAbi,
+      address: skillNftAddress,
+      functionName: 'getEASUID',
+      args: [tokens[i]]
+        })
+        nfts.push({
+          name: 'Skill',
+          uid: eas_uid
+        })
+      }
+      setNfts(nfts);
+     }
+      catch(e){
+        console.log(e);
+      }
    }
 
    if(chain && chain.name === 'Ethereum'){
@@ -77,9 +117,9 @@ const DashSection = ({ selectedContent }) => {
     async function loadAttestations(){
         let atts = [];
         let att = localStorage.getItem(account.address+'/'+'1');
-        if(att) atts.push(att);
+        if(att) atts.push({uid: att, id: 1});
         att = localStorage.getItem(account.address+'/'+'2');
-        if(att) atts.push(att);
+        if(att) atts.push({uid: att, id: 2});
         setAtts(atts)
     }
     if(selectedContent === 'attestations'){
@@ -99,22 +139,43 @@ const DashSection = ({ selectedContent }) => {
       </div>
       <div className="right-section-content">
       {
-        nfts && chain && chain.name==='Ethereum' && nfts.map((nft, index) => {
-        return <div className="right-section-content-card" key={index}>
+        nfts  && nfts.map((nft, index) => {
+        return (<div className="right-section-content-card" key={index}>
+          {flip===false && <>
           <div className="right-section-content-card-title">
           {nft.name}
           </div>
           <img src="https://www.shutterstock.com/image-vector/attestation-icon-symbol-flat-design-600w-1254143218.jpg" className="right-section-content-card-image"/>
           <div className="right-section-content-card-desc">
-           Course: Demo
+           Course: {nft.name==='Skill'? "Solidity course for beginners": "Demo"}
+          </div>
+          <div className="right-section-content-card-desc">
+           Skill: {nft.name==='Skill'? "Smart Contract Development": "Demo"}
           </div>
           <div className="right-section-content-card-desc">
            Grades: 4/5
           </div>
           <div className="right-section-content-card-desc">
-           EAS UID: 0x123456789
-          </div>
+           EAS scan: <a target='_blank' href={"https://base-goerli.easscan.org/attestation/view/"+nft.uid}>Click</a>
         </div>
+          <span className='card-flip-button' onClick={()=>setFlip(!flip)}>⏩</span>
+        </>
+        }
+          {flip===true&& <>
+          <div className="right-section-content-card-desc">
+           <b><i>i</i></b>&nbsp; We value your privacy ! Prove your skill using ZK
+          </div>
+          <button className="card-flip-proof-button">Generate Proof</button>
+          {proof!==null && <div className="card-flip-copy">Copy Proof --{'>'}<span className='card-flip-copy-emoji'>📜</span></div>}
+          <div className="right-section-content-card-desc">
+          <b><i>i</i></b>&nbsp; Warp your skill to another chain
+          <button className="card-flip-bridge-button">Warp to Optimism</button>
+          </div>
+          <span className='card-flip-button' onClick={()=>setFlip(!flip)}>⏪</span>
+          </>
+        }
+          </div>
+        )
         })
     }
       </div>
@@ -127,10 +188,10 @@ const DashSection = ({ selectedContent }) => {
          <h2>Your EAS attestations 🎫</h2>
         { atts && atts.map((att, index) => {
          return <div className="right-section-attestationData" key={index}>
-          <h1 className='attestation-content-title'>{index===0 ? ("Solidity course for beginners") : ("Make your First Dapp tutorial")}</h1>
-          <p className='attestation-content-desc'>UID : {att}</p>
-          <p className='attestation-content-desc'>EAS Scan ➚ : <a target="_blank" href={"https://sepolia.easscan.org/attestation/view/"+att}>Click</a></p>
-          <p className='attestation-content-desc'>Expires : {index==0?" Never": "In 1 hour"}</p>
+          <h1 className='attestation-content-title'>{att.id===1 ? ("Solidity course for beginners") : ("Make your First Dapp tutorial")}</h1>
+          <p className='attestation-content-desc'>UID : {att.uid}</p>
+          <p className='attestation-content-desc'>EAS Scan ➚ : <a target="_blank" href={"https://base-goerli.easscan.org/attestation/view/"+att.uid}>Click</a></p>
+          <p className='attestation-content-desc'>Revokes : {att.id===1?" Never": "In 1 hour"}</p>
          </div>})}
          
        </div>
