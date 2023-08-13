@@ -30,14 +30,13 @@ const Content = () => {
       ]);
       
       const schemaUID = "0xeb368690076a0c299465f38b48847d7f40b3ecdf25bbd769acd984d98ea612c6";
-      const revocation = (e.target.id==='1') ? 0 : (Date.now()+60*60*1000); 
+      const expiration = (e.target.id==='1') ? 0 : (Math.floor(Date.now()/1000)+60*60); 
 
       const tx = await eas.attest({
         schema: schemaUID,
         data: {
           recipient: account.address,
-          expirationTime: 0,
-          revocationTime: revocation,
+          expirationTime: expiration,
           revocable: true,
           data: encodedData,
         },

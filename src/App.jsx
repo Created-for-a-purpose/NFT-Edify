@@ -17,7 +17,7 @@ import {
   hardhat, mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet, sepolia
 } from 'wagmi/chains';
 const { chains, publicClient } = configureChains(
-  [mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet, sepolia, hardhat],
+  [mainnet, optimism, optimismGoerli, baseGoerli, zoraTestnet],
   [
     publicProvider()
   ]

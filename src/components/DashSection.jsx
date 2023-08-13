@@ -83,6 +83,15 @@ const DashSection = ({ selectedContent }) => {
        }
   }
 
+  const warp = async (id) => {
+       try{
+           
+       }
+        catch(e){
+          console.log(e);
+        }
+  }
+
   const search = async () => {
      if(!chain && chain.name!== 'Ethereum') return;
      if(toSearch === '') return;
@@ -163,7 +172,8 @@ const DashSection = ({ selectedContent }) => {
         })
         nfts.push({
           name: 'Skill',
-          uid: eas_uid
+          uid: eas_uid,
+          tokenId: tokens[i]
         })
       }
       setNfts(nfts);
@@ -192,6 +202,9 @@ const DashSection = ({ selectedContent }) => {
       loadAttestations();
     }
   }, [selectedContent]);
+  
+  const oplogo = "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png?v=026"
+  const baselogo = "https://storage.googleapis.com/ethglobal-api-production/organizations%2Fh5ps8%2Flogo%2F1678294488367_W-9qsu1e_400x400.jpeg"
 
   return (
     <>
@@ -208,9 +221,11 @@ const DashSection = ({ selectedContent }) => {
         nfts  && nfts.map((nft, index) => {
         return (<div className="right-section-content-card" key={index}>
           {flip===false && <>
+          <div className='right-section-content-card-top'>
           <div className="right-section-content-card-title">
           {nft.name}
           </div>
+          <img className='right-section-content-card-chain' src={baselogo}/></div>
           <img src="https://www.shutterstock.com/image-vector/attestation-icon-symbol-flat-design-600w-1254143218.jpg" className="right-section-content-card-image"/>
           <div className="right-section-content-card-desc">
            Course: {nft.name==='Skill'? "Solidity course for beginners": "Demo"}
@@ -231,11 +246,11 @@ const DashSection = ({ selectedContent }) => {
           <div className="right-section-content-card-desc">
            <b><i>i</i></b>&nbsp; We value your privacy ! Prove your skill using ZK
           </div>
-          <button className="card-flip-proof-button" onClick={()=>generateProof(nft.uid)}>Generate Proof</button>
+          <button className="card-flip-proof-button" onClick={()=>generateProof(nft.uid)}>Generate ZK Proof</button>
           {proof!==null && <div className="card-flip-copy">Copy Proof --{'>'}<span className='card-flip-copy-emoji' onClick={copyToClipboard}>📜</span></div>}
           <div className="right-section-content-card-desc">
           <b><i>i</i></b>&nbsp; Warp your skill to another chain
-          <button className="card-flip-bridge-button">Warp to Optimism</button>
+          <button className="card-flip-bridge-button" onClick={()=>warp(nft.tokenId)}>Warp to Optimism</button>
           </div>
           <span className='card-flip-button' onClick={()=>setFlip(!flip)}>⏪</span>
           </>
@@ -257,7 +272,7 @@ const DashSection = ({ selectedContent }) => {
           <h1 className='attestation-content-title'>{att.id===1 ? ("Solidity course for beginners") : ("Make your First Dapp tutorial")}</h1>
           <p className='attestation-content-desc'>UID : {att.uid}</p>
           <p className='attestation-content-desc'>EAS Scan ➚ : <a target="_blank" href={"https://base-goerli.easscan.org/attestation/view/"+att.uid}>Click</a></p>
-          <p className='attestation-content-desc'>Revokes : {att.id===1?" Never": "In 1 hour"}</p>
+          <p className='attestation-content-desc'>Expires : {att.id===1?" Never": "In 1 hour"}</p>
          </div>})}
          
        </div>

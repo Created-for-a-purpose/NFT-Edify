@@ -56,7 +56,7 @@
     padding: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: #fff;
+    background-color: rgb(204, 231, 248);
     border-radius: 6px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     height: 370px;
@@ -64,17 +64,29 @@
     text-align: center;
   }
 
+  .right-section-content-card-top{
+    display: flex;
+    justify-content: center;
+    align-items: right;
+  }
 
   .right-section-content-card-title{
     font-family: cursive;
     text-align: center;
     font-size: larger;
     padding: 7px;
+    width: 120%;
+    margin-left: 1.2rem;
+  }
+
+  .right-section-content-card-chain{
+    width: 40px;
+    height: 40px;
   }
 
   .right-section-content-card-image{
-    width: 70%;
-    height: 150px;
+    width: 60%;
+    height: 130px;
     border-radius: 6px;
     margin-bottom: 5px;
   }
@@ -82,7 +94,7 @@
   .right-section-content-card-desc{
     margin: 6px;
     margin-top:8px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: cursive;
   }
 
   .right-section-attestationData{
