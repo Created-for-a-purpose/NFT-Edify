@@ -214,7 +214,7 @@ const DashSection = ({ selectedContent }) => {
      loadZoraNfts();
    }
    else loadNfts();
-  }, [chain]);
+  }, [chain.id]);
 
   useEffect(() => {
     async function loadAttestations(){
@@ -230,8 +230,11 @@ const DashSection = ({ selectedContent }) => {
     }
   }, [selectedContent]);
   
+  const ethlogo = "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=026"
   const oplogo = "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png?v=026"
   const baselogo = "https://storage.googleapis.com/ethglobal-api-production/organizations%2Fh5ps8%2Flogo%2F1678294488367_W-9qsu1e_400x400.jpeg"
+  const opscan = "https://goerli-optimism.etherscan.io/address/"+warpAddress["optimismgoerli"].router
+  const basescan = "https://goerli.basescan.org/address/"+skillNftAddress
 
   return (
     <>
@@ -252,7 +255,7 @@ const DashSection = ({ selectedContent }) => {
           <div className="right-section-content-card-title">
           {nft.name}
           </div>
-          <img className='right-section-content-card-chain' src={nft.chain===420?(oplogo):(baselogo)}/></div>
+          <a target='_blank' href={nft.chain===420?(opscan):(basescan)}><img className='right-section-content-card-chain' src={nft.chain===420?(oplogo):(nft.chain===84531?baselogo:ethlogo)}/></a></div>
           <img src="https://www.shutterstock.com/image-vector/attestation-icon-symbol-flat-design-600w-1254143218.jpg" className="right-section-content-card-image"/>
           <div className="right-section-content-card-desc">
            Course: {nft.name==='Skill'? "Solidity course for beginners": "Demo"}

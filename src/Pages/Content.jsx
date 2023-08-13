@@ -1,6 +1,6 @@
 import "./Content.css"
 import Navbar from "../components/Navbar"
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { stringToHex } from "viem";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk"
@@ -15,9 +15,13 @@ const Content = () => {
   const account = useAccount();
   const provider = new ethers.BrowserProvider(window.ethereum);
   const signer = new ethers.Wallet("cde2be96e27d483b8b1bf45b68d5b721d891371689c358f2d1497054c07609b4", provider);
+
+  const [button1, setButton1] = useState('Get for free !');
+  const [button2, setButton2] = useState('Free for 1 hour !');
   
   const get = async (e)=>{
     try{
+      e.target.id==='1' ? setButton1('Attesting...') : setButton2('Attesting...');
       const courseId = stringToHex(e.target.id, { size: 32});
       const courseName = e.target.name;
         eas.connect(signer);
@@ -46,9 +50,21 @@ const Content = () => {
 
       console.log('att',e.target.id, newAttestationUID);
       localStorage.setItem(account.address+'/'+e.target.id, newAttestationUID);
+      e.target.id==='1' ? setButton1('Hurray !') : setButton2('Hurray !');
       
     } catch(e){ console.log(e)}
     }
+
+    useEffect(()=>{
+      const att1 = localStorage.getItem(account.address+'/1');
+      const att2 = localStorage.getItem(account.address+'/2');
+      if(att1){
+        setButton1('Already owned !');
+      }
+      if(att2){
+        setButton2('Already owned !');
+      }
+    },[])
 
     return(
       <>
@@ -59,7 +75,7 @@ const Content = () => {
             <div className="content-card-details">
             <h1>Solidity course for beginners <span onClick={()=> navigate("/content/1")}>▶️</span></h1>
             <p>Created by 0x4ceb38DFc5aDbB1B98CB55892F6e27Ee032115E7</p>
-            <button onClick={get} id="1" name="Solidity course for beginners">Get for free !</button> 
+            <button onClick={get} id="1" name="Solidity course for beginners">{button1}</button> 
             </div> 
         </div>
 
@@ -68,7 +84,7 @@ const Content = () => {
             <div className="content-card-details">
             <h1>Make your First Dapp tutorial <span onClick={()=> navigate("/content/2")}>▶️</span></h1>
             <p>Created by 0x4ceb38DFc5aDbB1B98CB55892F6e27Ee032115E7</p>
-            <button onClick={get} id="2" name="Make your First Dapp tutorial">Free for 1 hour !</button>
+            <button onClick={get} id="2" name="Make your First Dapp tutorial">{button2}</button>
             </div>
         </div>
       </div>
