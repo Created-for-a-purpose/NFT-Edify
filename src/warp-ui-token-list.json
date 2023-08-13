@@ -1,0 +1,12 @@
+[
+  {
+    "chainId": 84531,
+    "name": "SkillNFT",
+    "symbol": "SKNFT",
+    "decimals": 0,
+    "type": "collateral",
+    "address": "0x619a7618e045db47044cbC00dc6D3ffA31FC473F",
+    "hypCollateralAddress": "0xdc427b122b8470b9B83A817462098BD058E4bfB6",
+    "isNft": true
+  }
+]

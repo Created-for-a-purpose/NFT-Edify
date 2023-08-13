@@ -1,0 +1,10 @@
+{
+  "base": {
+    "router": "0xdc427b122b8470b9B83A817462098BD058E4bfB6",
+    "tokenType": "collateral"
+  },
+  "optimismgoerli": {
+    "router": "0x0df7f720a16045C34D5226fFd0719e464127a71c",
+    "tokenType": "synthetic"
+  }
+}

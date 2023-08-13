@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './DashSection.css'; 
 import { useNetwork, useAccount } from 'wagmi';
-import { readContract } from 'wagmi/actions';
-import { skillNftAddress, skillNftAbi} from "../constants"
+import { readContract, writeContract } from 'wagmi/actions';
+import { hexZeroPad } from "@ethersproject/bytes";
+import warpAddress from "../warp-token-addresses.json"
+import { skillNftAddress, skillNftAbi, HypERC721_CollateralAbi } from "../constants"
 import { EAS } from "@ethereum-attestation-service/eas-sdk";
 import axios from 'axios';
-import { ethers } from "ethers";
+import {ethers}  from "ethers";
 import { ZDK } from '@zoralabs/zdk';
 
 const API_ENDPOINT = "https://api.zora.co/graphql";
@@ -23,6 +25,7 @@ const DashSection = ({ selectedContent }) => {
   const [atts, setAtts] = useState([]);
   const [flip, setFlip] = useState(false);
   const [proof, setProof] = useState(null);
+  const [warpHash, setWarpHash] = useState(null);
 
   const process = (string) => {
       // convert hex to bit string
@@ -85,7 +88,25 @@ const DashSection = ({ selectedContent }) => {
 
   const warp = async (id) => {
        try{
-           
+
+      const routerAddress = warpAddress['base'].router;
+      
+        await writeContract({
+      abi: skillNftAbi,
+      address: skillNftAddress,
+      functionName: 'setApprovalForAll',
+      args: [routerAddress, true]
+        })
+        
+         const {hash} =  await writeContract({
+      abi: HypERC721_CollateralAbi,
+      address: routerAddress,
+      functionName: 'transferRemote',
+      args: [420, hexZeroPad(account.address, 32), id]
+           })
+          setWarpHash(hash);
+
+          setNfts(nfts.map(nft=>({...nft, chain: 420})))
        }
         catch(e){
           console.log(e);
@@ -144,6 +165,11 @@ const DashSection = ({ selectedContent }) => {
 
    async function loadNfts(){
      try{
+      let nftAddress;
+      if(chain.id===420) nftAddress = warpAddress["optimismgoerli"].router;
+      else nftAddress = skillNftAddress;
+      // const skillNftAddress = nftAddress;
+
         const totalSupply = await readContract({
       abi: skillNftAbi,
       address: skillNftAddress,
@@ -161,7 +187,7 @@ const DashSection = ({ selectedContent }) => {
         if(owner === account.address)
         tokens.push(i)
         }
-
+        
         let nfts = [];
         for(let i=0; i<tokens.length; i++){
           const eas_uid = await readContract({
@@ -173,6 +199,7 @@ const DashSection = ({ selectedContent }) => {
         nfts.push({
           name: 'Skill',
           uid: eas_uid,
+          chain: 84531,
           tokenId: tokens[i]
         })
       }
@@ -225,7 +252,7 @@ const DashSection = ({ selectedContent }) => {
           <div className="right-section-content-card-title">
           {nft.name}
           </div>
-          <img className='right-section-content-card-chain' src={baselogo}/></div>
+          <img className='right-section-content-card-chain' src={nft.chain===420?(oplogo):(baselogo)}/></div>
           <img src="https://www.shutterstock.com/image-vector/attestation-icon-symbol-flat-design-600w-1254143218.jpg" className="right-section-content-card-image"/>
           <div className="right-section-content-card-desc">
            Course: {nft.name==='Skill'? "Solidity course for beginners": "Demo"}
@@ -250,7 +277,7 @@ const DashSection = ({ selectedContent }) => {
           {proof!==null && <div className="card-flip-copy">Copy Proof --{'>'}<span className='card-flip-copy-emoji' onClick={copyToClipboard}>📜</span></div>}
           <div className="right-section-content-card-desc">
           <b><i>i</i></b>&nbsp; Warp your skill to another chain
-          <button className="card-flip-bridge-button" onClick={()=>warp(nft.tokenId)}>Warp to Optimism</button>
+          <button className="card-flip-bridge-button" onClick={()=>warp(nft.tokenId)}>{warpHash===null?("Warp to Optimism"):(<a target='_blank' href={"https://goerli.basescan.org/tx/"+warpHash}>View tx</a>)}</button>
           </div>
           <span className='card-flip-button' onClick={()=>setFlip(!flip)}>⏪</span>
           </>
