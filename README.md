@@ -1,70 +1,8 @@
-# Getting Started with Create React App
+# NFT-Edify
+## This project was submitted to Superhack by EthGlobal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project's main idea is to empower decentralized & verifiable credentials (skills). The project leverages EAS to provide on-chain attestations to those accessing our educational content, the attestations contain all the details regarding the course and the skill acquired by the user. These attestations power skill NFTs, which can be minted by the user on successfully receiving a valid attestation. The skill NFTs act as proof of skill which are shareable and act as immutable and verifiable records. Some educational content is limited time free only, so EAS makes it possible to issue attestations with an expiration time representing user access to content. The users would have access to the content till the corresponding attestation is not expired and they would lose access once it does.
 
-## Available Scripts
+Skill NFTs might contain sensitive information or the information a user does not want to share with the world. To ensure privacy, these skill NFTs are powered by zk-SNARKS, implemented using snarkjs and circom. Users can prove that they have a valid attestation issued by our platform without sharing details about the attestation. The circom circuits implemented in this project verify if the attestations were made by the creator of the EAS schema and not by anyone else, and also verifies if the schema UID indeed corresponds to the schema that is issuing proof of skill attestations. Users can generate zk proofs from their skill NFTs and share them with the verifier (employer, institution, etc.). The proofs also contain the attestation recipient address, so the verifier can know if the prover is genuine. The verifier can verify the proof, which is implemented by a smart contract verifier.sol and if the prover does not provide a valid proof, then the verifier would know about the false claim.
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Interoperability in our project is made possible by hyperlane and its warp routes. Skill NFTs should not be limited to a single chain ! Interchain implementation future proofs the skill NFTs. Hyperlane was not available on base-goerli testnet, so I successfully deployed hyperlane to base-goerli. The project uses hyperlane's warp routes so that users can bridge their skills NFTs from base to another chains (optimism).
